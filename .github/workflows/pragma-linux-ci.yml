@@ -31,5 +31,33 @@ jobs:
         with:
           submodules: 'recursive'
           
-      - uses: mxschmitt/action-tmate@v3
-        name: CI
+      - name: Build LuaJit
+        shell: bash
+        run: |
+          cd third_party_libs/luajit
+          sudo make
+          cd ../../
+          cp third_party_libs/luajit/src/libluajit-p.so ./
+          
+      - name: Build lua_compile
+        shell: bash
+        run: |
+          cmake -G "Unix Makefiles" -DDEPENDENCY_LUAJIT_INCLUDE=./third_party_libs/luajit/src/ -DDEPENDENCY_LUAJIT_LIBRARY=./third_party_libs/luajit/src/libluajit-p.so
+          cmake --build ./ --verbose
+          
+      - name: Create Release Files
+        shell: bash
+        run: |
+          mkdir release
+          rsync libluajit-p.so release/
+          rsync lua_compile release/
+          
+      - name: Upload Release
+        uses: Silverlan/common_actions/release_nightly_binaries@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.ref_name }}
+
+      - name: Handle Error
+        uses: Silverlan/common_actions/action_handle_error@main
+        if: failure()
