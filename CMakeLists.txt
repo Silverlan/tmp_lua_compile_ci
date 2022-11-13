@@ -51,6 +51,8 @@ function(add_def DEF)
 	set(DEFINITIONS ${DEFINITIONS} ${DEF} PARENT_SCOPE)
 endfunction(add_def)
 
+link_external_library(luajit)
+
 ##### CONFIGURATION #####
 
 set(PROJ_NAME lua_compile)
