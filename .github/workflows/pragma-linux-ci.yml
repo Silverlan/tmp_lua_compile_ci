@@ -51,7 +51,7 @@ jobs:
           mkdir release
           rsync libluajit-p.so release/
           rsync lua_compile release/
-          patchelf --set-rpath ./release/lua_compile '$$ORIGIN'
+          patchelf --set-rpath ./release/lua_compile '\$ORIGIN'
           
       - name: Upload Release
         uses: Silverlan/common_actions/release_nightly_binaries@main
