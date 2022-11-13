@@ -50,8 +50,8 @@ jobs:
         shell: bash
         run: |
           mkdir release
-          rsync lua51.dll release/
-          rsync lua_compile.exe release/
+          cp lua51.dll release/
+          cp lua_compile.exe release/
           
       - name: Upload Release
         uses: Silverlan/common_actions/release_nightly_binaries@main
