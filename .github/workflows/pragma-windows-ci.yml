@@ -38,20 +38,20 @@ jobs:
           cd third_party_libs/luajit
           make
           cd ../../
-          cp third_party_libs/luajit/src/luajit-p.dll ./
+          cp third_party_libs/luajit/src/lua51.dll ./
           
       - name: Build lua_compile
         shell: bash
         run: |
-          cmake -G "Unix Makefiles" -DDEPENDENCY_LUAJIT_INCLUDE=./third_party_libs/luajit/src/ -DDEPENDENCY_LUAJIT_LIBRARY=./third_party_libs/luajit/src/libluajit-p.so
+          cmake -G "Unix Makefiles" -DDEPENDENCY_LUAJIT_INCLUDE=./third_party_libs/luajit/src/ -DDEPENDENCY_LUAJIT_LIBRARY=./third_party_libs/luajit/src/lua51.dll
           cmake --build ./ --verbose
           
       - name: Create Release Files
         shell: bash
         run: |
           mkdir release
-          rsync luajit-p.dll release/
-          rsync lua_compile release/
+          rsync lua51.dll release/
+          rsync lua_compile.exe release/
           
       - name: Upload Release
         uses: Silverlan/common_actions/release_nightly_binaries@main
