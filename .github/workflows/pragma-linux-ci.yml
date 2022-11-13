@@ -28,6 +28,8 @@ jobs:
             build_dir: 'build'
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
           
       - uses: mxschmitt/action-tmate@v3
         name: CI
