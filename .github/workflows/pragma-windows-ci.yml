@@ -36,7 +36,7 @@ jobs:
         shell: bash
         run: |
           cd third_party_libs/luajit
-          sudo make
+          make
           cd ../../
           cp third_party_libs/luajit/src/luajit-p.dll ./
           
